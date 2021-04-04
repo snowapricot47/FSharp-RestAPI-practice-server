@@ -20,12 +20,12 @@ type UserController(logger: ILogger<UserController>) =
         match Guid.TryParse id with
         | true, guid ->
             match Seq.tryFind (fun user -> user.Id = guid) users with
-            | Some user -> OkObjectResult user :> IActionResult
-            | None -> BadRequestResult() :> IActionResult
-        | false, _ -> BadRequestResult() :> IActionResult
+            | Some user -> OkObjectResult user
+            | None -> BadRequestResult
+        | false, _ -> BadRequestResult
 
     [<HttpGet("list")>]
-    member _.GetAll() = users
+    member _.GetAll() = OkObjectResult users
 
     [<HttpPost>]
     member _.Create(request: UserRequest) =
@@ -43,7 +43,7 @@ type UserController(logger: ILogger<UserController>) =
         match Guid.TryParse request.Id with
         | true, guid ->
             if 0 < users.RemoveAll(fun x -> x.Id = guid) then
-                NoContentResult() :> IActionResult
+                NoContentResult
             else
-                BadRequestResult() :> IActionResult
-        | false, _ -> BadRequestResult() :> IActionResult
+                BadRequestResult
+        | false, _ -> BadRequestResult

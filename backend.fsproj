@@ -3,6 +3,7 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ResultUnion.fs" />
     <Compile Include="User.fs" />
     <Compile Include="WeatherForecast.fs" />
     <Compile Include="Controllers\UserController.fs" />
