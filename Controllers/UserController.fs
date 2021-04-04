@@ -36,4 +36,4 @@ type UserController(logger: ILogger<UserController>) =
               Name = request.Name
               Age = request.Age }
 
-        {| Id = id |}
+        CreatedResult("dummy", {| Id = id |})
