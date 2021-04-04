@@ -37,3 +37,13 @@ type UserController(logger: ILogger<UserController>) =
               Age = request.Age }
 
         CreatedResult("dummy", {| Id = id |})
+
+    [<HttpDelete>]
+    member _.DeleteById(request: {| Id: string |}) =
+        match Guid.TryParse request.Id with
+        | true, guid ->
+            if 0 < users.RemoveAll(fun x -> x.Id = guid) then
+                NoContentResult() :> IActionResult
+            else
+                BadRequestResult() :> IActionResult
+        | false, _ -> BadRequestResult() :> IActionResult
